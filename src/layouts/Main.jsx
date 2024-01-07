@@ -25,7 +25,6 @@ const Main = () => {
       <main>
         <Outlet />
       </main>
-      <h1>main</h1>
       <img src={wave} alt="" />
     </div>
   )
