@@ -9,7 +9,7 @@ import Intro from "../components/Intro"
 import AddBudgetForm from "../components/AddBudgetForm"
 
 // helper functions
-import { createBudget, fetchData } from "../helpers"
+import { createBudget, fetchData, wait } from "../helpers"
 
 // loader
 export function dashboardLoader() {
@@ -20,6 +20,8 @@ export function dashboardLoader() {
 
 // action
 export async function dashboardAction({request}){
+  await wait()
+
   const data = await request.formData()
   const {_action, ...values} = Object.fromEntries(data)
 
@@ -44,8 +46,6 @@ export async function dashboardAction({request}){
       throw new Error("There was a problem creating your budget.")
     }
   }
-
-
 }
 
 const Dashboard = () => {
