@@ -24,7 +24,6 @@ const AddExpenseForm = ({budgets}) => {
       //reset focus
       focusRef.current.focus()
     }
-
   }, [isSubmitting])
 
   return ( 
