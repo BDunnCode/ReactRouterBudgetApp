@@ -9,6 +9,7 @@ import Intro from "../components/Intro"
 import AddBudgetForm from "../components/AddBudgetForm"
 import AddExpenseForm from "../components/AddExpenseForm"
 import BudgetItem from "../components/BudgetItem"
+import Table from "../components/Table"
 
 // helper functions
 import { createBudget, createExpense, fetchData, wait } from "../helpers"
@@ -17,7 +18,8 @@ import { createBudget, createExpense, fetchData, wait } from "../helpers"
 export function dashboardLoader() {
   const userName = fetchData("userName")
   const budgets = fetchData("budgets")
-  return { userName, budgets }
+  const expenses = fetchData("expenses")
+  return { userName, budgets, expenses }
 } 
 
 // action
@@ -37,6 +39,7 @@ export async function dashboardAction({request}){
     }
   }
 
+  // new budget creation
   if(_action === "createBudget"){
     try {
       createBudget({
@@ -49,6 +52,7 @@ export async function dashboardAction({request}){
     }
   }
 
+  // new expense creation
   if(_action === "createExpense"){
     try {
       createExpense({
@@ -63,8 +67,10 @@ export async function dashboardAction({request}){
   }
 }
 
+  // The actual display under the nav
+
 const Dashboard = () => {
-  const { userName, budgets } = useLoaderData()
+  const { userName, budgets, expenses } = useLoaderData()
   
   return (
     <>
@@ -90,6 +96,15 @@ const Dashboard = () => {
                     )) 
                   }
                 </div>
+                {
+                  expenses && expenses.length > 0 && (
+                    <div className="grid-md">
+                      <h2>Recent Expenses</h2>
+                      <Table expenses={expenses.sort((a, b) =>
+                        b.createdAt - a.createdAt)} />
+                    </div>
+                  ) 
+                }
               </div>
             )
             : (
