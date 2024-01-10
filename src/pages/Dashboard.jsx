@@ -12,7 +12,7 @@ import BudgetItem from "../components/BudgetItem"
 import Table from "../components/Table"
 
 // helper functions
-import { createBudget, createExpense, fetchData, wait } from "../helpers"
+import { createBudget, createExpense, deleteItem, fetchData, wait } from "../helpers"
 
 // loader
 export function dashboardLoader() {
@@ -65,7 +65,24 @@ export async function dashboardAction({request}){
       throw new Error("There was a problem creating your expense.")
     }
   }
+
+  // delete expense
+  if(_action === "deleteExpense"){
+    try {
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId
+      })      
+      return toast.success("Expense deleted!")
+    } catch(e) {
+      throw new Error("There was a problem deleting your expense.")
+    }
+  }
 }
+
+
+
+
 
   // The actual display under the nav
 
